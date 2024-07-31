@@ -28,8 +28,9 @@ param tokens object
 
 */
 
-var namingConvention = '${toLower(resourcePrefix)}-${empty(stampIndex) ? '' : '${stampIndex}-'}${tokens.resource}-${networkName}-${environmentAbbreviation}-${locationAbbreviation}'
-var namingConvention_Service = '${toLower(resourcePrefix)}-${empty(stampIndex) ? '' : '${stampIndex}-'}${tokens.resource}-${tokens.service}-${networkName}-${environmentAbbreviation}-${locationAbbreviation}'
+var namingConvention = '${tokens.resource}-${toLower(resourcePrefix)}-${locationAbbreviation}-${environmentAbbreviation}-${networkShortName}${empty(stampIndex) ? '' : '-${stampIndex}'}'
+//var namingConvention_Rg = '${tokens.resource}-${toLower(resourcePrefix)}-${locationAbbreviation}-${environmentAbbreviation}-${networkName}${empty(stampIndex) ? '' : '-${stampIndex}'}'
+var namingConvention_Service = '${tokens.resource}-${toLower(resourcePrefix)}-${locationAbbreviation}-${environmentAbbreviation}-${tokens.service}-${networkName}${empty(stampIndex) ? '' : '-${stampIndex}'}'
 
 /*
 
@@ -59,8 +60,6 @@ var names = {
   azureFirewallManagementPublicIPAddressDiagnosticSetting: replace(replace(namingConvention_Service, tokens.resource, resourceAbbreviations.diagnosticSettings), tokens.service, '${resourceAbbreviations.publicIpAddresses}-mgmt-${resourceAbbreviations.azureFirewalls}')
   azureFirewallPolicy: replace(namingConvention, tokens.resource, resourceAbbreviations.firewallPolicies)
   bastionHost: replace(namingConvention, tokens.resource, resourceAbbreviations.bastionHosts)
-  bastionHostNetworkSecurityGroup: replace(replace(namingConvention_Service, tokens.resource, resourceAbbreviations.networkSecurityGroups), tokens.service, resourceAbbreviations.bastionHosts)
-  bastionHostDiagnosticSetting: replace(replace(namingConvention_Service, tokens.resource, resourceAbbreviations.diagnosticSettings), tokens.service, resourceAbbreviations.bastionHosts)  
   bastionHostPublicIPAddress: replace(replace(namingConvention_Service, tokens.resource, resourceAbbreviations.publicIpAddresses), tokens.service, resourceAbbreviations.bastionHosts)
   bastionHostPublicIPAddressDiagnosticSetting: replace(replace(namingConvention_Service, tokens.resource, resourceAbbreviations.diagnosticSettings), tokens.service, '${resourceAbbreviations.publicIpAddresses}-${resourceAbbreviations.bastionHosts}')
   computeGallery: replace(replace(namingConvention, tokens.resource, resourceAbbreviations.computeGallieries), '-', '_') // Compute Galleries do not support hyphens
